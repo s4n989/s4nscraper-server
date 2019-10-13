@@ -2,6 +2,8 @@ const mongoose = require("mongoose");
 const getSecret = require("./secret");
 const express = require("express");
 const bodyParser = require("body-parser");
+const request = require("request");
+const cheerio = require("cheerio");
 const logger = require("morgan");
 const Data = require("./data");
 
@@ -23,9 +25,13 @@ router.get("/", (req, res) => {
 });
 
 router.get("/getData", (req, res) => {
-  Data.find((err, data) => {
-    if (err) return res.json({ success: false, error: err });
-    return res.json({ success: true, data: data });
+  request({
+  uri: req.query.url,
+  }, function(err, response, body) {
+    if (err) {
+      return res.send(400, err);
+    }
+    return res.send(body);
   });
 });
 
