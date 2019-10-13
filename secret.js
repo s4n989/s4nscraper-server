@@ -1,5 +1,5 @@
 const secrets = {
-  dbUri: "mongodb://jelo:a9bc839993@ds151382.mlab.com:51382/jelotest"
+  dbUri: process.env["MONGODB_URI"]
 };
 
 const getSecret = key => secrets[key];
